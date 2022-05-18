@@ -1,0 +1,65 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.Arrays;
+import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
+class Edge{
+    String source;
+    String Dest;
+    public Edge(String S,String D)
+    {
+        this.source=S;
+        this.Dest=D;
+    }
+}
+class Graph{
+    List<List<String>> AdjList=null;
+    public Graph(ArrayList<Edge> Edges,int n){
+        AdjList=new ArrayList<>();
+        for(int i=0;i<=n;i++)
+        {
+            AdjList.add(new ArrayList<>());
+        }
+        for(Edge edge:Edges)
+        {
+            String Source=edge.source;
+            String Dest=edge.Dest;
+            AdjList.get(Source).add(Dest);
+            AdjList.get(Dest).add(Source);
+        }
+    }
+}
+class HelloWorld {
+    public static void IterativeDFS(Graph g,String v,boolean[] Discovered){
+        Stack<String> path=new Stack<>();
+        path.push(v);
+        while(!path.isEmpty())
+        {
+            v=path.pop();
+            if(Discoverd[v])
+                continue;
+            Discovered[v]=true;
+            System.out.println(v+" ");
+        }
+        ArrayList<String> adj=g.AdjList.get(v);
+        for(int i=adj.size()-1;i>0;i--)
+        {
+            String n=adj.get(i);
+            if(!Discovered[n])
+                path.push(n);
+        }
+    }
+    public static void main(String[] args) {
+        ArrayList<Edge> graph=Arrays.asList(new Edge("a","b"),new Edge("a","c"),new Edge("b","d"),new Edge("c","e"),new Edge("d","f"));
+        int n=6;
+        Graph g=new Graph(graph,n);
+        boolean[] discovered = new boolean[n];
+        for (int i = 0; i < n; i++)
+        {
+            if (!discovered[i]) {
+                iterativeDFS(g, i, discovered);
+            }
+        }
+    }
+}
